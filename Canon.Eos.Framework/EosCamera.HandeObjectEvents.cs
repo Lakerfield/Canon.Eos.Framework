@@ -64,7 +64,10 @@ namespace Canon.Eos.Framework
         
         private void OnObjectEventDirItemRequestTransfer(IntPtr sender)
         {
-            this.OnPictureTaken(_transporter.TransportAsFile(sender, _picturePath));
+            if (string.IsNullOrWhiteSpace(_picturePath))
+                this.OnPictureTaken(_transporter.TransportInMemory(sender));
+            else
+                this.OnPictureTaken(_transporter.TransportAsFile(sender, _picturePath));
         }
         
         private void OnObjectEventDirItemRequestTransferDt(IntPtr sender, IntPtr context)

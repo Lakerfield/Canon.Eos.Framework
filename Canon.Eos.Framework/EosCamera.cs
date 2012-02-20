@@ -394,14 +394,18 @@ namespace Canon.Eos.Framework
 
         private void SavePicturesToHost(string pathFolder, SaveLocation saveLocation)
         {
-            if (string.IsNullOrWhiteSpace(pathFolder))
-                throw new ArgumentException("Cannot be null or white space.", "pathFolder");
-
             this.CheckDisposed();
 
-            _picturePath = pathFolder;
-            if (!Directory.Exists(_picturePath))
-                Directory.CreateDirectory(_picturePath);
+            if (string.IsNullOrWhiteSpace(pathFolder))
+            {
+                _picturePath = null;
+            }
+            else
+            {
+                _picturePath = pathFolder;
+                if (!Directory.Exists(_picturePath))
+                    Directory.CreateDirectory(_picturePath);
+            }
 
             this.ChangePicturesSaveLocation(saveLocation | SaveLocation.Host);
         }        
